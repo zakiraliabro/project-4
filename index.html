@@ -2,35 +2,47 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 
 <body>
-    <div id="main-top">
-        <div id="top-1">
+    <label for="city-name">City:
+        <input type="text" id="city-name">
+    </label>
+    <button onclick="checkWeather()">Check</button><br>
+    <img id="conditionImg" src="" alt="">
+    <p>(mist)</p>
+    <ul>
+        <li>Location: Karachi , Sindh , Pakistan</li>
+        <li>Fahrenheit: 73.2 °F</li>
+        <li>Feelslike: 22.5 °C</li>
+        <li>Humidity: 17%</li>
+        <li>Visibility: 10km</li>
+        <li>Wind Speed: 11.2kp/h</li>
 
-            <a href="">SAVE MORE ON APP</a>
-            <a href="">SELL ON DARAZ</a>
-            <a href="">HELP & SUPPORT</a>
-            <a href="">LOGIN</a>
-            <a href="">SIGNUP</a>
-            <a href="">زبان تبدیل کریں</a>
-        </div>
-        <div id="top-2">
-            <a href=""> <img id="main-icon" src="./darazicm.JPG" alt=""></a>
-            <input type="search" placeholder="Search in Daraz" name="" id="search-bar">
-            <button id="search-button" type="submit"><i class="fa fa-search"></i></button>
+    </ul>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
 
-            <a href=""> <img id="shop-icon" src="./Capture.JPG" alt=""></a>
-        </div>
+        let city = "London";
 
-    </div>
-    <div>
-        <img id="baner" src="./print-206005700.webp" alt="" >
-    </div>
+
+        function checkWeather(){
+            let city = document.getElementById("city-name").value
+            axios.get(`https://api.weatherapi.com/v1/current.json?key=d347dfb1a00b4f86add45435242510&q=${city}`)
+            .then((response) => {
+                console.log(response.data);
+                let currentLocation = response.data.location
+                let currentWeather = response.data.current
+                document.getElementById("weatherImg").src = `https:${currentWeather.condition.icon}`
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+        </script>
 </body>
 
 </html>
